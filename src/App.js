@@ -4,7 +4,7 @@ import "./App.css";
 
 import MusicDrop from "./MusicDrop";
 import SongList from "./SongList";
-import playSongFromFile from "./playFromFile";
+import SongController from "./SongController";
 
 const seconds = 1000;
 
@@ -21,7 +21,7 @@ class App extends Component {
     const songSources = [];
     for (let i = 0; i < songs.length; i++) {
       console.log("Decode", i);
-      const source = await playSongFromFile(songs[i]);
+      const source = new SongController(songs[i]);
       songSources.push(source);
       console.log("Done", i);
     }
@@ -31,7 +31,7 @@ class App extends Component {
       setTimeout(() => {
         const num = i;
         if (num !== 0) {
-          songSources[num - 1].stop();
+          songSources[num - 1].stop(10);
           console.timeEnd("NUM" + (num - 1));
         }
         console.time("NUM" + num);
