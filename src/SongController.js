@@ -3,6 +3,7 @@ import smoothfade from "smoothfade";
 
 const seconds = 1000;
 
+// An instance of this class can only be once started and stopped
 class SongController {
   constructor(file) {
     this.file = file;
@@ -18,14 +19,23 @@ class SongController {
   }
 
   async start() {
+    if (this.stopped) {
+      return;
+    }
+
     await this.promise;
 
     this.gain.gain.setValueAtTime(0, this.context.currentTime);
     this.source.start(0);
     this.smooth.fadeIn();
+    this.started = true;
   }
 
   async stop(fadeTime) {
+    this.stopped = true;
+    if (!this.started) {
+      return;
+    }
     await this.promise;
 
     if (this.smooth) {

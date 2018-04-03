@@ -10,11 +10,11 @@ const seconds = 1000;
 class App extends Component {
   constructor() {
     super();
-    this.state = { songs: [], defaultLength: 20, fadeTime: 10 };
+    this.state = { songs: [], defaultLength: 20, fadeTime: 10, playing: false };
   }
 
   async playFinal() {
-    console.log("PlayFinal");
+    this.setState({ playing: true });
     const { defaultLength, fadeTime, songs } = this.state;
 
     const songSources = [];
@@ -24,6 +24,8 @@ class App extends Component {
       songSources.push(source);
       console.log("Done", i);
     }
+
+    this.setState({ songSources });
 
     // play songs for given length after each other
     for (let i = 0; i <= songSources.length; i++) {
@@ -37,8 +39,17 @@ class App extends Component {
 
         if (num !== songSources.length) {
           songSources[num].start();
+        } else {
+          this.setState({ songSources: null, playing: false });
         }
       }, (defaultLength - fadeTime) * seconds * i);
+    }
+  }
+
+  abortFinal() {
+    if (this.state.songSources) {
+      this.state.songSources.forEach(source => source.stop());
+      this.setState({ songSources: null, playing: false });
     }
   }
 
@@ -59,7 +70,11 @@ class App extends Component {
           />
 
           {this.state.songs.length ? (
-            <a onClick={this.playFinal.bind(this)}>Play Final</a>
+            this.state.playing ? (
+              <a onClick={this.abortFinal.bind(this)}>Abort Final</a>
+            ) : (
+              <a onClick={this.playFinal.bind(this)}>Play Final</a>
+            )
           ) : (
             <p>Please add some songs so that we can start a final</p>
           )}
