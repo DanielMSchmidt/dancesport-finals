@@ -15,4 +15,4 @@ Use `yarn install` to install the dependencies and `yarn start` to start the dev
 
 ## Deployment
 
-- [ ] The current version is automatically deployed to github pages.
+The current version is automatically deployed to github pages.
