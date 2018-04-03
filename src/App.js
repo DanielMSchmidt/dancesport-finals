@@ -1,18 +1,33 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+
+import MusicDrop from "./MusicDrop";
+import SongList from "./SongList";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = { songs: [] };
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Let's mix some finals</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+
+        <section>
+          <MusicDrop
+            onNewMusic={file =>
+              this.setState({ songs: [...this.state.songs, file] })
+            }
+          />
+        </section>
+
+        <section>
+          <SongList songs={this.state.songs} />
+        </section>
       </div>
     );
   }
