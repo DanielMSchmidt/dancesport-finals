@@ -1,17 +1,19 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
-const context = new AudioContext();
 
 function playFromFile(file) {
   let fileBlob;
   return new Promise((resolve, reject) => {
+    const context = new AudioContext();
     const fileReader = new FileReader();
     const decode = blob =>
       context.decodeAudioData(blob, function(buffer) {
         try {
           const source = context.createBufferSource();
+          const gain = context.createGain();
           source.buffer = buffer;
-          source.connect(context.destination);
-          resolve(source);
+          source.connect(gain);
+          gain.connect(context.destination);
+          resolve({ source, gain, context });
         } catch (e) {
           reject(e);
         }

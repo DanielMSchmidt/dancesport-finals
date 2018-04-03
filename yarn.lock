@@ -6125,6 +6125,10 @@ slice-ansi@1.0.0:
   dependencies:
     is-fullwidth-code-point "^2.0.0"
 
+smoothfade@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/smoothfade/-/smoothfade-1.1.0.tgz#503f8d41a73250fb5ed8743965b7d757de552c36"
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"

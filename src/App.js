@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import smoothfade from "smoothfade";
 import "./App.css";
 
 import MusicDrop from "./MusicDrop";
