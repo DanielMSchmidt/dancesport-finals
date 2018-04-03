@@ -3,11 +3,43 @@ import "./App.css";
 
 import MusicDrop from "./MusicDrop";
 import SongList from "./SongList";
+import playSongFromFile from "./playFromFile";
+
+const seconds = 1000;
 
 class App extends Component {
   constructor() {
     super();
-    this.state = { songs: [] };
+    this.state = { songs: [], defaultLength: 10 };
+  }
+
+  async playFinal() {
+    console.log("PlayFinal");
+    const { defaultLength, fadeTime, songs } = this.state;
+
+    const songSources = [];
+    for (let i = 0; i < songs.length; i++) {
+      console.log("Decode", i);
+      const source = await playSongFromFile(songs[i]);
+      songSources.push(source);
+      console.log("Done", i);
+    }
+
+    // play songs for given length after each other
+    for (let i = 0; i <= songSources.length; i++) {
+      setTimeout(() => {
+        const num = i;
+        if (num !== 0) {
+          songSources[num - 1].stop();
+          console.timeEnd("NUM" + (num - 1));
+        }
+        console.time("NUM" + num);
+
+        if (num !== songSources.length) {
+          songSources[num].start();
+        }
+      }, defaultLength * seconds * i);
+    }
   }
 
   render() {
@@ -25,6 +57,8 @@ class App extends Component {
               }))
             }
           />
+
+          <a onClick={this.playFinal.bind(this)}>Play Final</a>
         </section>
 
         <section>
