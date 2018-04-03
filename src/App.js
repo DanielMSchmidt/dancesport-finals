@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import smoothfade from "smoothfade";
 import "./App.css";
 
 import MusicDrop from "./MusicDrop";
@@ -11,7 +10,7 @@ const seconds = 1000;
 class App extends Component {
   constructor() {
     super();
-    this.state = { songs: [], defaultLength: 10 };
+    this.state = { songs: [], defaultLength: 20, fadeTime: 10 };
   }
 
   async playFinal() {
@@ -28,10 +27,10 @@ class App extends Component {
 
     // play songs for given length after each other
     for (let i = 0; i <= songSources.length; i++) {
-      setTimeout(() => {
+      setTimeout(async () => {
         const num = i;
         if (num !== 0) {
-          songSources[num - 1].stop(10);
+          await songSources[num - 1].stop(fadeTime);
           console.timeEnd("NUM" + (num - 1));
         }
         console.time("NUM" + num);
@@ -39,7 +38,7 @@ class App extends Component {
         if (num !== songSources.length) {
           songSources[num].start();
         }
-      }, defaultLength * seconds * i);
+      }, (defaultLength - fadeTime) * seconds * i);
     }
   }
 

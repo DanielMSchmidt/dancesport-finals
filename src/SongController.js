@@ -29,10 +29,15 @@ class SongController {
     await this.promise;
 
     if (this.smooth) {
-      this.smooth.fadeOut();
-      setTimeout(() => {
-        this.source.stop();
-      }, fadeTime * seconds);
+      return new Promise(resolve => {
+        this.smooth.fadeOut();
+        setTimeout(() => {
+          this.source.stop();
+          resolve();
+        }, fadeTime * seconds);
+      });
+    } else {
+      return Promise.resolve();
     }
   }
 }
