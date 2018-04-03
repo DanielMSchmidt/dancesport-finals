@@ -20,13 +20,23 @@ class App extends Component {
         <section>
           <MusicDrop
             onNewMusic={file =>
-              this.setState(state => ({ songs: [...state.songs, file] }))
+              this.setState(state => ({
+                songs: [...state.songs, file]
+              }))
             }
           />
         </section>
 
         <section>
-          <SongList songs={this.state.songs} />
+          <SongList
+            songs={this.state.songs.map(song => ({
+              id: song.name,
+              content: song
+            }))}
+            setReorderedSongs={newSongs =>
+              this.setState({ songs: newSongs.map(song => song.content) })
+            }
+          />
         </section>
       </div>
     );

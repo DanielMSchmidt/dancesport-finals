@@ -17,7 +17,6 @@ class MusicDrop extends Component {
   }
 
   onDrop(files) {
-    console.log(files);
     const supportedFiles = files.filter(file =>
       SUPPORTED_AUDIO_FORMATS.includes(file.type)
     );
@@ -27,8 +26,7 @@ class MusicDrop extends Component {
         error: true
       });
     } else {
-      this.setState({ error: false });
-      supportedFiles.map(file => this.props.onNewMusic(file));
+      supportedFiles.forEach(file => this.props.onNewMusic(file));
     }
   }
 
