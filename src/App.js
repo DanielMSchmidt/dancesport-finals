@@ -58,7 +58,11 @@ class App extends Component {
             }
           />
 
-          <a onClick={this.playFinal.bind(this)}>Play Final</a>
+          {this.state.songs.length ? (
+            <a onClick={this.playFinal.bind(this)}>Play Final</a>
+          ) : (
+            <p>Please add some songs so that we can start a final</p>
+          )}
         </section>
 
         <section>
@@ -68,7 +72,9 @@ class App extends Component {
               content: song
             }))}
             setReorderedSongs={newSongs =>
-              this.setState({ songs: newSongs.map(song => song.content) })
+              this.setState({
+                songs: newSongs.map(song => song.content)
+              })
             }
           />
         </section>
