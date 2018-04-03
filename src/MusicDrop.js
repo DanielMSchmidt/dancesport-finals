@@ -50,10 +50,10 @@ class MusicDrop extends Component {
           width: "calc(100% - 15px)",
           height: "100px",
           margin: "5px",
-          "border-width": "2px",
-          "border-color": "rgb(102, 102, 102)",
-          "border-style": "dashed",
-          "border-radius": "5px"
+          borderWidth: "2px",
+          borderColor: "rgb(102, 102, 102)",
+          borderStyle: "dashed",
+          borderRadius: "5px"
         }}
         onDrop={this.onDrop.bind(this)}
       >
