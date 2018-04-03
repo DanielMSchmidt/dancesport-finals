@@ -1,41 +1,30 @@
 import React, { Component } from "react";
-import smoothfade from "smoothfade";
-
-import playSongFromFile from "./playFromFile";
-
-const seconds = 1000;
+import SongController from "./SongController";
 
 class Song extends Component {
   constructor(props) {
     super(props);
-    this.state = { playing: false, source: null };
+    this.state = { playing: false, songApi: null };
   }
   async playSong() {
     this.setState({ playing: true });
     try {
-      const { source, gain, context } = await playSongFromFile(this.props.song);
+      const song = new SongController(this.props.song);
 
-      gain.gain.setValueAtTime(0, context.currentTime);
-      const smooth = smoothfade(context, gain);
-      this.setState({ source, smooth });
-
-      source.start(0);
-      smooth.fadeIn();
+      await song.start();
+      this.setState({ songApi: song });
     } catch (e) {
       console.error(e);
     }
   }
 
-  cancelSong() {
-    const { smooth, source } = this.state;
-    if (smooth) {
-      smooth.fadeOut();
-      setTimeout(() => {
-        source.stop();
-      }, 10 * seconds);
+  async cancelSong() {
+    const { songApi } = this.state;
+    if (songApi) {
+      await songApi.stop(10);
     }
 
-    this.setState({ playing: false, source: null });
+    this.setState({ playing: false, songApi: null });
   }
 
   render() {
@@ -50,7 +39,7 @@ class Song extends Component {
               : this.playSong.bind(this)
           }
         >
-          {this.state.playing ? (this.state.source ? `▶️` : `⏬`) : `⏸️ `}
+          {this.state.playing ? (this.state.songApi ? `▶️` : `⏬`) : `⏸️ `}
         </a>
         {name}
       </li>
