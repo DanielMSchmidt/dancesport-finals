@@ -1,4 +1,4 @@
-# Dancsport Finals
+# Dancsport Finals [![Build Status](https://travis-ci.org/DanielMSchmidt/dancesport-finals.svg?branch=master)](https://travis-ci.org/DanielMSchmidt/dancesport-finals)
 
 The purpose of this frontend app is to compose dancesport finals.
 
