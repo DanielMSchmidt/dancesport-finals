@@ -20,7 +20,7 @@ class App extends Component {
         <section>
           <MusicDrop
             onNewMusic={file =>
-              this.setState({ songs: [...this.state.songs, file] })
+              this.setState(state => ({ songs: [...state.songs, file] }))
             }
           />
         </section>
