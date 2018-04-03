@@ -45,11 +45,20 @@ class MusicDrop extends Component {
     );
 
     return (
-      <div className="dropzone">
-        <Dropzone onDrop={this.onDrop.bind(this)}>
-          {this.state.error ? error : <p>Please drop your music here</p>}
-        </Dropzone>
-      </div>
+      <Dropzone
+        style={{
+          width: "calc(100% - 15px)",
+          height: "100px",
+          margin: "5px",
+          "border-width": "2px",
+          "border-color": "rgb(102, 102, 102)",
+          "border-style": "dashed",
+          "border-radius": "5px"
+        }}
+        onDrop={this.onDrop.bind(this)}
+      >
+        {this.state.error ? error : <p>Please drop your music here</p>}
+      </Dropzone>
     );
   }
 }
