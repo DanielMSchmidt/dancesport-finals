@@ -1,6 +1,8 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 const context = new AudioContext();
+export const node = context.createPanner();
+
 function playFromFile(file) {
   let fileBlob;
   return new Promise((resolve, reject) => {
@@ -13,6 +15,7 @@ function playFromFile(file) {
           source.buffer = buffer;
           source.connect(gain);
           gain.connect(context.destination);
+          gain.connect(node);
           resolve({ source, gain, context });
         } catch (e) {
           reject(e);

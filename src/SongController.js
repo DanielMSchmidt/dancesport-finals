@@ -1,4 +1,4 @@
-import playSongFromFile from "./playFromFile";
+import playSongFromFile, { node } from "./playFromFile";
 import smoothfade from "smoothfade";
 
 const seconds = 1000;
@@ -16,6 +16,10 @@ class SongController {
         this.context = context;
       }
     );
+  }
+
+  static getNode() {
+    return node;
   }
 
   async start() {

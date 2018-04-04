@@ -9,10 +9,13 @@
     "react-dom": "^16.3.0",
     "react-dropzone": "^4.2.9",
     "react-scripts": "1.1.2",
+    "recorderjs": "^1.0.1",
     "smoothfade": "^1.1.0"
   },
   "scripts": {
+    "prestart": "cp node_modules/recorderjs/recorderWorker.js public/",
     "start": "react-scripts start",
+    "prebuild": "cp node_modules/recorderjs/recorderWorker.js public/",
     "build": "react-scripts build",
     "test": "exit 0",
     "eject": "react-scripts eject"
