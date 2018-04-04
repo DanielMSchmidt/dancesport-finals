@@ -4,11 +4,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.0.0",
     "react": "^16.3.0",
     "react-beautiful-dnd": "^6.0.2",
     "react-dom": "^16.3.0",
     "react-dropzone": "^4.2.9",
     "react-scripts": "1.1.2",
+    "reactstrap": "^5.0.0",
     "recorderjs": "^1.0.1",
     "smoothfade": "^1.1.0"
   },

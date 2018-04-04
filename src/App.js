@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button, ButtonGroup, Container, Row, Col } from "reactstrap";
 import Recorder from "recorderjs";
 
 import "./App.css";
@@ -20,6 +21,16 @@ function forceDownload(blob, filename) {
   a.click();
   URL.revokeObjectURL(url);
 }
+
+const Centered = ({ children }) => (
+  <Row style={{ marginTop: 20, marginBottom: 20 }}>
+    <Col xs="0" lg="3" />
+    <Col xs="12" lg="6">
+      {children}
+    </Col>
+    <Col xs="0" lg="3" />
+  </Row>
+);
 
 const seconds = 1000;
 
@@ -94,12 +105,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Let's mix some finals</h1>
-        </header>
+      <Container className="App">
+        <Centered>
+          <h1 className="display-5">Let's mix some finals</h1>
+        </Centered>
 
-        <section>
+        <Centered>
           <MusicDrop
             onNewMusic={file =>
               this.setState(state => ({
@@ -107,26 +118,46 @@ class App extends Component {
               }))
             }
           />
-          {this.state.songs.length ? (
-            this.state.playing ? (
-              <a onClick={this.abortFinal.bind(this)}>Abort Final</a>
-            ) : (
-              <a onClick={this.playFinal.bind(this)}>Play Final</a>
-            )
-          ) : (
-            <p>Please add some songs so that we can start a final</p>
-          )}
+        </Centered>
 
+        <Centered>
+          <ButtonGroup>
+            {this.state.songs.length ? (
+              this.state.playing ? (
+                <Button color="danger" onClick={this.abortFinal.bind(this)}>
+                  Abort Final
+                </Button>
+              ) : (
+                <Button color="primary" onClick={this.playFinal.bind(this)}>
+                  Play Final
+                </Button>
+              )
+            ) : null}
+
+            {this.state.songs.length ? (
+              this.state.recording ? (
+                <Button
+                  color="danger"
+                  onClick={this.abortFinal.bind(this, true)}
+                >
+                  Abort Recording
+                </Button>
+              ) : (
+                <Button
+                  color="primary"
+                  onClick={this.playFinal.bind(this, true)}
+                >
+                  Record & Play Final
+                </Button>
+              )
+            ) : null}
+          </ButtonGroup>
+        </Centered>
+
+        <Centered>
           {this.state.songs.length ? (
-            this.state.recording ? (
-              <a onClick={this.abortFinal.bind(this, true)}>Abort Recording</a>
-            ) : (
-              <a onClick={this.playFinal.bind(this, true)}>Record Final</a>
-            )
+            <p>You can drag this list to sort it</p>
           ) : null}
-        </section>
-
-        <section>
           <SongList
             songs={this.state.songs.map(song => ({
               id: song.name,
@@ -138,8 +169,8 @@ class App extends Component {
               })
             }
           />
-        </section>
-      </div>
+        </Centered>
+      </Container>
     );
   }
 }

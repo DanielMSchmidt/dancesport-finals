@@ -31,7 +31,7 @@ class Song extends Component {
     const { name } = this.props.song;
 
     return (
-      <li>
+      <div>
         <a
           onClick={
             this.state.playing
@@ -42,7 +42,7 @@ class Song extends Component {
           {this.state.playing ? (this.state.songApi ? `▶️` : `⏬`) : `⏸️ `}
         </a>
         {name}
-      </li>
+      </div>
     );
   }
 }

@@ -30,7 +30,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? "lightblue" : "lightgrey",
   padding: grid,
-  width: 250
+  width: "100%"
 });
 
 class SongList extends Component {
@@ -92,17 +92,5 @@ class SongList extends Component {
     );
   }
 }
-
-// import React, { Component } from "react";
-
-// class SongList extends Component {
-//   render() {
-//     return (
-//       <ul>
-//         {this.props.songs.map(song => )}
-//       </ul>
-//     );
-//   }
-// }
 
 export default SongList;
