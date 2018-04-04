@@ -51,7 +51,7 @@ class App extends Component {
     this.state = {
       songs: [],
       songLength: 90,
-      fadeTime: 10,
+      pauseLength: 30,
       playing: false,
       recording: false
     };
@@ -63,7 +63,7 @@ class App extends Component {
       workerPath: "/recorderWorker.js"
     });
 
-    const { songLength, fadeTime, songs } = this.state;
+    const { songLength, pauseLength, songs } = this.state;
 
     const songSources = [];
     for (let i = 0; i < songs.length; i++) {
@@ -79,7 +79,7 @@ class App extends Component {
       setTimeout(async () => {
         const num = i;
         if (num !== 0) {
-          await songSources[num - 1].stop(fadeTime);
+          await songSources[num - 1].stop(pauseLength);
         }
 
         if (num !== songSources.length) {
@@ -98,13 +98,14 @@ class App extends Component {
             forceDownload(blob, "final.wav");
           });
         }
-      }, (songLength - fadeTime) * seconds * i);
+      }, songLength * seconds * i - pauseLength);
     }
   }
 
   abortFinal(record) {
     if (this.state.songSources) {
       this.state.songSources.forEach(source => source.stop());
+
       this.setState({
         songSources: null,
         playing: false,
@@ -164,29 +165,55 @@ class App extends Component {
           </ButtonGroup>
         </Centered>
 
-        <Centered>
-          <Form>
-            <FormGroup>
-              <Label for="exampleNumber">Length of the final in seconds</Label>
-              <Input
-                type="number"
-                name="length"
-                placeholder="90"
-                value={this.state.songLength}
-                onChange={event =>
-                  this.setState({
-                    songLength: parseInt(event.target.value, 10)
-                  })
-                }
-              />
-            </FormGroup>
-          </Form>
-        </Centered>
+        <Row>
+          <Col xs="12" md="6">
+            <Form>
+              <FormGroup>
+                <Label for="exampleNumber">
+                  Length of the final in seconds
+                </Label>
+                <Input
+                  type="number"
+                  name="length"
+                  placeholder="90"
+                  value={this.state.songLength}
+                  onChange={event =>
+                    this.setState({
+                      songLength: parseInt(event.target.value, 10)
+                    })
+                  }
+                />
+              </FormGroup>
+            </Form>
+          </Col>
+
+          <Col xs="12" md="6">
+            <Form>
+              <FormGroup>
+                <Label for="exampleNumber">
+                  Pause between the dances in seconds
+                </Label>
+                <Input
+                  type="number"
+                  name="length"
+                  placeholder="30"
+                  value={this.state.pauseLength}
+                  onChange={event =>
+                    this.setState({
+                      pauseLength: parseInt(event.target.value, 10)
+                    })
+                  }
+                />
+              </FormGroup>
+            </Form>
+          </Col>
+        </Row>
 
         <Centered>
           {this.state.songs.length ? (
             <p>You can drag this list to sort it</p>
           ) : null}
+
           <SongList
             songs={this.state.songs.map(song => ({
               id: song.name,
