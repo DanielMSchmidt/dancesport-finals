@@ -156,10 +156,7 @@ class App extends Component {
         </Centered>
 
         <Centered>
-          <ButtonGroup>
-            {playButton}
-            {recordButton}
-          </ButtonGroup>
+          <ButtonGroup>{recordButton}</ButtonGroup>
         </Centered>
 
         <Row>
