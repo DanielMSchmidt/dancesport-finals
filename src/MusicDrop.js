@@ -57,7 +57,11 @@ class MusicDrop extends Component {
         }}
         onDrop={this.onDrop.bind(this)}
       >
-        {this.state.error ? error : <p>Please drop your music here</p>}
+        {this.state.error ? (
+          error
+        ) : (
+          <h5 style={{ marginTop: 30 }}>Please drop your music here</h5>
+        )}
       </Dropzone>
     );
   }
