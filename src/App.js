@@ -144,7 +144,6 @@ class App extends Component {
         <Centered>
           <h1 className="display-5">Let's mix some finals</h1>
         </Centered>
-
         <Centered>
           <MusicDrop
             onNewMusic={file =>
@@ -154,72 +153,77 @@ class App extends Component {
             }
           />
         </Centered>
+        {this.state.songs.length ? (
+          <div>
+            <Centered>
+              <ButtonGroup>{recordButton}</ButtonGroup>
+              <p style={{ marginTop: 10 }}>
+                Unfortunately we need to play the final one time to save it.
+                Afterwards the final will automatically be downloaded to your
+                computer.
+              </p>
+            </Centered>
 
-        <Centered>
-          <ButtonGroup>{recordButton}</ButtonGroup>
-        </Centered>
+            <Row>
+              <Col xs="12" md="6">
+                <Form>
+                  <FormGroup>
+                    <Label for="exampleNumber">
+                      Length of the final in seconds
+                    </Label>
+                    <Input
+                      type="number"
+                      name="length"
+                      placeholder="90"
+                      value={this.state.songLength}
+                      onChange={event =>
+                        this.setState({
+                          songLength: parseInt(event.target.value, 10)
+                        })
+                      }
+                    />
+                  </FormGroup>
+                </Form>
+              </Col>
 
-        <Row>
-          <Col xs="12" md="6">
-            <Form>
-              <FormGroup>
-                <Label for="exampleNumber">
-                  Length of the final in seconds
-                </Label>
-                <Input
-                  type="number"
-                  name="length"
-                  placeholder="90"
-                  value={this.state.songLength}
-                  onChange={event =>
-                    this.setState({
-                      songLength: parseInt(event.target.value, 10)
-                    })
-                  }
-                />
-              </FormGroup>
-            </Form>
-          </Col>
+              <Col xs="12" md="6">
+                <Form>
+                  <FormGroup>
+                    <Label for="exampleNumber">
+                      Pause between the dances in seconds
+                    </Label>
+                    <Input
+                      type="number"
+                      name="length"
+                      placeholder="30"
+                      value={this.state.pauseLength}
+                      onChange={event =>
+                        this.setState({
+                          pauseLength: parseInt(event.target.value, 10)
+                        })
+                      }
+                    />
+                  </FormGroup>
+                </Form>
+              </Col>
+            </Row>
+            <Centered>
+              <p>You can drag this list to sort it</p>
 
-          <Col xs="12" md="6">
-            <Form>
-              <FormGroup>
-                <Label for="exampleNumber">
-                  Pause between the dances in seconds
-                </Label>
-                <Input
-                  type="number"
-                  name="length"
-                  placeholder="30"
-                  value={this.state.pauseLength}
-                  onChange={event =>
-                    this.setState({
-                      pauseLength: parseInt(event.target.value, 10)
-                    })
-                  }
-                />
-              </FormGroup>
-            </Form>
-          </Col>
-        </Row>
-
-        <Centered>
-          {this.state.songs.length ? (
-            <p>You can drag this list to sort it</p>
-          ) : null}
-
-          <SongList
-            songs={this.state.songs.map(song => ({
-              id: song.name,
-              content: song
-            }))}
-            setReorderedSongs={newSongs =>
-              this.setState({
-                songs: newSongs.map(song => song.content)
-              })
-            }
-          />
-        </Centered>
+              <SongList
+                songs={this.state.songs.map(song => ({
+                  id: song.name,
+                  content: song
+                }))}
+                setReorderedSongs={newSongs =>
+                  this.setState({
+                    songs: newSongs.map(song => song.content)
+                  })
+                }
+              />
+            </Centered>
+          </div>
+        ) : null}
       </Container>
     );
   }
