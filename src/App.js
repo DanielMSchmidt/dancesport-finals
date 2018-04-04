@@ -115,6 +115,30 @@ class App extends Component {
   }
 
   render() {
+    const playButton = this.state.songs.length ? (
+      this.state.playing ? (
+        <Button color="danger" onClick={this.abortFinal.bind(this)}>
+          Abort Final
+        </Button>
+      ) : (
+        <Button color="primary" onClick={this.playFinal.bind(this)}>
+          Play Final
+        </Button>
+      )
+    ) : null;
+
+    const recordButton = this.state.songs.length ? (
+      this.state.recording ? (
+        <Button color="danger" onClick={this.abortFinal.bind(this, true)}>
+          Abort Recording
+        </Button>
+      ) : (
+        <Button color="primary" onClick={this.playFinal.bind(this, true)}>
+          Record & Play Final
+        </Button>
+      )
+    ) : null;
+
     return (
       <Container className="App">
         <Centered>
@@ -133,35 +157,8 @@ class App extends Component {
 
         <Centered>
           <ButtonGroup>
-            {this.state.songs.length ? (
-              this.state.playing ? (
-                <Button color="danger" onClick={this.abortFinal.bind(this)}>
-                  Abort Final
-                </Button>
-              ) : (
-                <Button color="primary" onClick={this.playFinal.bind(this)}>
-                  Play Final
-                </Button>
-              )
-            ) : null}
-
-            {this.state.songs.length ? (
-              this.state.recording ? (
-                <Button
-                  color="danger"
-                  onClick={this.abortFinal.bind(this, true)}
-                >
-                  Abort Recording
-                </Button>
-              ) : (
-                <Button
-                  color="primary"
-                  onClick={this.playFinal.bind(this, true)}
-                >
-                  Record & Play Final
-                </Button>
-              )
-            ) : null}
+            {playButton}
+            {recordButton}
           </ButtonGroup>
         </Centered>
 
