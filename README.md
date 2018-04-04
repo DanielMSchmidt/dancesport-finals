@@ -4,10 +4,10 @@ The purpose of this frontend app is to compose dancesport finals. See the [onlin
 
 ## Features
 
-- [ ] Use your own songs
-- [ ] Choose your own order (W-TG-WW-SF-QS) or (W-WW-TG-WW-WW-WW-SF-WW-QS)
-- [ ] Choose the length of each song by it's own & a general length
-- [ ] Download the composed final and take it with you
+* [x] Use your own songs
+* [x] Choose your own order (W-TG-WW-SF-QS) or (W-WW-TG-WW-WW-WW-SF-WW-QS)
+* [x] Download the composed final and take it with you
+* [ ] Choose the length of each song by it's own & a general length
 
 ## Development
 
