@@ -1,5 +1,15 @@
 import React, { Component } from "react";
-import { Button, ButtonGroup, Container, Row, Col } from "reactstrap";
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Container,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Row
+} from "reactstrap";
 import Recorder from "recorderjs";
 
 import "./App.css";
@@ -40,7 +50,7 @@ class App extends Component {
 
     this.state = {
       songs: [],
-      defaultLength: 20,
+      songLength: 90,
       fadeTime: 10,
       playing: false,
       recording: false
@@ -53,7 +63,7 @@ class App extends Component {
       workerPath: "/recorderWorker.js"
     });
 
-    const { defaultLength, fadeTime, songs } = this.state;
+    const { songLength, fadeTime, songs } = this.state;
 
     const songSources = [];
     for (let i = 0; i < songs.length; i++) {
@@ -88,7 +98,7 @@ class App extends Component {
             forceDownload(blob, "final.wav");
           });
         }
-      }, (defaultLength - fadeTime) * seconds * i);
+      }, (songLength - fadeTime) * seconds * i);
     }
   }
 
@@ -152,6 +162,25 @@ class App extends Component {
               )
             ) : null}
           </ButtonGroup>
+        </Centered>
+
+        <Centered>
+          <Form>
+            <FormGroup>
+              <Label for="exampleNumber">Length of the final in seconds</Label>
+              <Input
+                type="number"
+                name="length"
+                placeholder="90"
+                value={this.state.songLength}
+                onChange={event =>
+                  this.setState({
+                    songLength: parseInt(event.target.value, 10)
+                  })
+                }
+              />
+            </FormGroup>
+          </Form>
         </Centered>
 
         <Centered>
