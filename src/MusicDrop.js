@@ -26,6 +26,7 @@ class MusicDrop extends Component {
         error: true
       });
     } else {
+      this.setState({ error: false });
       supportedFiles.forEach(file => this.props.onNewMusic(file));
     }
   }
