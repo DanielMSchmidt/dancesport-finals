@@ -74,32 +74,43 @@ class App extends Component {
     this.setState({ songSources });
 
     rec.record();
-    // play songs for given length after each other
-    for (let i = 0; i <= songSources.length; i++) {
-      setTimeout(async () => {
-        const num = i;
-        if (num !== 0) {
-          await songSources[num - 1].stop(pauseLength);
-        }
 
-        if (num !== songSources.length) {
-          songSources[num].start();
-        } else {
-          // The end
-          this.setState({
-            songSources: null,
-            playing: false,
-            recording: false
-          });
+    const songStartTimes = songSources.map(
+      (_, index) => index * songLength + index * pauseLength
+    );
+    const songEndTimes = songSources.map(
+      (_, index) => (index + 1) * songLength + index * pauseLength
+    );
 
-          rec.stop();
+    songStartTimes.forEach((startTime, index) => {
+      setTimeout(() => {
+        songSources[index].start();
+      }, startTime * seconds);
+    });
 
-          rec.exportWAV(blob => {
-            forceDownload(blob, "final.wav");
-          });
-        }
-      }, songLength * seconds * i - pauseLength);
-    }
+    songEndTimes.forEach((endTime, index) => {
+      setTimeout(() => {
+        songSources[index].stop(pauseLength);
+      }, endTime * seconds);
+    });
+
+    const endOfFinal =
+      (songEndTimes[songEndTimes.length - 1] + pauseLength) * seconds;
+
+    setTimeout(() => {
+      // The end
+      this.setState({
+        songSources: null,
+        playing: false,
+        recording: false
+      });
+
+      rec.stop();
+
+      rec.exportWAV(blob => {
+        forceDownload(blob, "final.wav");
+      });
+    }, endOfFinal);
   }
 
   abortFinal(record) {
